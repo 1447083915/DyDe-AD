@@ -55,7 +55,7 @@ $$H_r = \text{GELU}(\text{Conv1d}_r(M)), \quad r \in \{1, 2, 4, 8\}$$
 ### 2. Multi-scale Prototype Learning
 Each scale maintains an independent prototype codebook $P_r = \{p_{r,1}, \dots, p_{r,N_r}\} \in \mathbb{R}^{N_r \times c}$ (32 prototypes/scale). Continuous features are quantised to their nearest prototype:
 
-$$e_{r,t} = p_{r,k^{*}}, \quad k^{*} = \arg\min_k \|h_{r,t} - p_{r,k}\|^2$$
+$$ e_{r,t} = p_{r,k^{*}}, \quad k^{*} = \arg\min_k \lVert h_{r,t} - p_{r,k}\rVert^2 $$
 
 The VQ commitment loss pulls features and prototypes toward each other:
 
