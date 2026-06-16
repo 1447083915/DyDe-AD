@@ -55,7 +55,7 @@ $$H_r = \text{GELU}(\text{Conv1d}_r(M)), \quad r \in \{1, 2, 4, 8\}$$
 ### 2. Multi-scale Prototype Learning
 Each scale maintains an independent prototype codebook $P_r = \{p_{r,1}, \dots, p_{r,N_r}\} \in \mathbb{R}^{N_r \times c}$ (32 prototypes/scale). Continuous features are quantised to their nearest prototype:
 
-$$e_{r,t} = p_{r,k^*}, \quad k^* = \arg\min_k \|h_{r,t} - p_{r,k}\|^2$$
+$$e_{r,t} = p_{r,k^{*}}, \quad k^{*} = \arg\min_k \|h_{r,t} - p_{r,k}\|^2$$
 
 The VQ commitment loss pulls features and prototypes toward each other:
 
@@ -103,8 +103,6 @@ DyDe-AD/
 ├── dataset/                        # Data preprocessing scripts
 │   ├── RflyMAD/                    # RflyMAD dataset helpers
 │   └── ALFA/                       # ALFA dataset helpers
-├── Paper/
-│   └── DyDe-AD_WISE.pdf            # Full paper
 └── checkpoints/                    # Saved model weights (created at runtime)
 ```
 
@@ -151,15 +149,14 @@ python run.py \
     --data RflyMAD \
     --root_path ./dataset/RflyMAD/ \
     --seq_len 175 \
-    --enc_in 23 \
+    --enc_in 43 \
     --d_model 128 \
     --latent_dim 64 \
     --batch_size 128 \
     --train_epochs 100 \
     --learning_rate 0.001 \
     --patience 3 \
-    --lradj cosine \
-    --anomaly_ratio 0.25
+    --lradj cosine
 ```
 
 Key arguments:
@@ -225,24 +222,3 @@ Results on real-world and simulated UAV datasets compared against 17 representat
 
 DyDe-AD achieves competitive or superior performance with only **~0.47M trainable parameters** and the **highest inference throughput** among all compared methods.
 
----
-
-## Citation
-
-```bibtex
-@inproceedings{dydead2025,
-  title     = {From Signal Decomposition to Dynamical Decoupling:
-               A Mori–Zwanzig Perspective for UAV Anomaly Detection},
-  author    = {Anonymous},
-  booktitle = {Under Review},
-  year      = {2025}
-}
-```
-
-## License
-
-See [LICENSE](LICENSE) for details.
-
-## Acknowledgements
-
-This codebase builds upon the [Time-Series-Library (TSLib)](https://github.com/thuml/Time-Series-Library) framework.
