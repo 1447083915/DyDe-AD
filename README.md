@@ -55,7 +55,7 @@ $$H_r = \text{GELU}(\text{Conv1d}_r(M)), \quad r \in \{1, 2, 4, 8\}$$
 ### 2. Multi-scale Prototype Learning
 Each scale maintains an independent prototype codebook $P_r = \{p_{r,1}, \dots, p_{r,N_r}\} \in \mathbb{R}^{N_r \times c}$ (32 prototypes/scale). Continuous features are quantised to their nearest prototype:
 
-$$ e_{r,t} = p_{r,k^{*}}, \quad k^{*} = \arg\min_k \lVert h_{r,t} - p_{r,k}\rVert^2 $$
+$$ e_{r,t} = p_{r,k^{\star}}, \quad k^{\star} = \arg\min_k \lVert h_{r,t} - p_{r,k}\rVert^2 $$
 
 The VQ commitment loss pulls features and prototypes toward each other:
 
@@ -64,7 +64,7 @@ $$\mathcal{L}^r_{vq} = \sum_t \|\text{sg}[h_{r,t}] - e_{r,t}\|^2 + \beta \|h_{r,
 ### 3. Scale-indexed Cross Retrieval
 Learnable **scale embeddings** $s_r \in \mathbb{R}^c$ are injected into queries and keys so the attention mechanism distinguishes temporal granularities:
 
-- **Query:** $Q_r = (\tilde{H}_r + \mathbf{1}_T \otimes s_r) W_{\text{query}}$
+- **Query:** $Q_r = (\tilde{H}_r + \mathbf{1}_T \otimes s_r) W_{\mathrm{query}}$
 - **Key:** $K_r = (P_r + s_r) W_{\text{key}}$ (all prototypes across all scales)
 - **Value:** $V_r = P_r W_{\text{value}}$
 - **Retrieval:** $R_r = \text{softmax}(Q_r K^\top / \sqrt{c}) V$
